@@ -1,0 +1,17 @@
+[certsign]
+username=xx
+password=
+
+[ms_sign]
+username=xx@realteksemiconductorcorp.onmicrosoft.com
+password=
+[iflow]
+username=xx
+password=
+11n=0.2
+11ac=0.4
+11ax=0.4
+
+[email]
+username=xx@realtek.com
+password=

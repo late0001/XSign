@@ -16,6 +16,7 @@ from XSignWinui import Ui_MainWindow
 import sys
 from ud_zip import ZFile
 from uListItem import MyListWidgetItem
+from tSign import TSign
 
 class mywindow(QMainWindow, Ui_MainWindow):
     def  __init__ (self):
@@ -27,7 +28,12 @@ class mywindow(QMainWindow, Ui_MainWindow):
         self.pushButton1.setText("Oj8K")
         self.pushButton1.RecvFileSignal.connect(self.dealRecvFile)
         self.btnExtract.clicked.connect(self.btnExtractClicked)
+        self.btnRtkSign.clicked.connect(self.btnRtkSignClicked)
+        self.tSign = TSign()
     
+    def btnRtkSignClicked(self):
+        self.tSign.signFiles(self.ic)
+        
     def btnExtractClicked(self):
         for it in self.ic:
             extractZip( it["filename"], "./temp")
@@ -51,7 +57,6 @@ class mywindow(QMainWindow, Ui_MainWindow):
             print(it)
             item = QListWidgetItem() # 创建QListWidgetItem对象
             item.setSizeHint(QSize(300, 80)) # 设置QListWidgetItem大小
-            #widget = get_item_wight(it)
             widget = MyListWidgetItem()
             widget.initData(it)
             self.listWidget.addItem(item) # 添加item
