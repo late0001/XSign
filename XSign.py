@@ -14,7 +14,7 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from XSignWinui import Ui_MainWindow
 import sys
-
+from ud_zip import ZFile
 
 class mywindow(QMainWindow, Ui_MainWindow):
     def  __init__ (self):
@@ -25,7 +25,12 @@ class mywindow(QMainWindow, Ui_MainWindow):
         self.pushButton1.setObjectName("pushButton1")
         self.pushButton1.setText("Oj8K")
         self.pushButton1.RecvFileSignal.connect(self.dealRecvFile)
-        
+        self.btnExtract.clicked.connect(self.btnExtractClicked)
+    
+    def btnExtractClicked(self):
+        for it in self.ic:
+            extractZip( it["filename"], "./temp")
+    
     def dealRecvFile(self, fileList):
         print ("*"*80)
         print (fileList)
@@ -40,6 +45,7 @@ class mywindow(QMainWindow, Ui_MainWindow):
             c["status"] = ""
             ic.append(c)
         print ("*"*80)
+        self.ic = ic
         for it in ic:
             print(it)
             item = QListWidgetItem() # 创建QListWidgetItem对象
@@ -76,6 +82,12 @@ class Button(QPushButton):
         else:
             super(Button,self).dropEvent(event)
 
+#解压缩Zip到指定文件夹
+def extractZip(zfile, path):
+    z = ZFile(zfile)
+    z.extract_to(path)
+    z.close()
+    
 def getFileInfo(filename):
     """获取文件的图片和名字"""
     fileInfo = QFileInfo(filename)
@@ -91,9 +103,7 @@ def get_item_wight(data):
     isX64 = data['isX64']
     ship_star = 3 #data['ship_star']
     
-    fileInfo = QFileInfo(filename)
-    fileIcon = QFileIconProvider()
-    name = QtCore.QFileInfo(filename).fileName()
+    icon, name = getFileInfo(filename)
     
     # 总Widget
     wight = QWidget()
@@ -102,7 +112,7 @@ def get_item_wight(data):
     map_l = QLabel() # 头像显示
     #map_l.setFixedSize(40, 25)
     #maps = QPixmap(ship_photo).scaled(40, 25)
-    icon = QIcon(fileIcon.icon(fileInfo))# 头像显示
+
     pixmap = icon.pixmap(QSize(22, 22), QIcon.Normal, QIcon.On)
 #                                    isEnabled() ? QIcon::Normal
 #                                                : QIcon::Disabled,

@@ -21,8 +21,11 @@ class Ui_MainWindow(object):
         self.pushButton.setGeometry(QtCore.QRect(20, 440, 751, 101))
         self.pushButton.setObjectName("pushButton")
         self.listWidget = QtWidgets.QListWidget(self.centralwidget)
-        self.listWidget.setGeometry(QtCore.QRect(20, 20, 751, 401))
+        self.listWidget.setGeometry(QtCore.QRect(20, 20, 751, 341))
         self.listWidget.setObjectName("listWidget")
+        self.btnExtract = QtWidgets.QPushButton(self.centralwidget)
+        self.btnExtract.setGeometry(QtCore.QRect(40, 390, 93, 28))
+        self.btnExtract.setObjectName("btnExtract")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
@@ -39,3 +42,4 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.pushButton.setText(_translate("MainWindow", "PushButton"))
+        self.btnExtract.setText(_translate("MainWindow", "解压"))

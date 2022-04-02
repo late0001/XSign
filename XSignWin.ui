@@ -33,8 +33,21 @@
       <x>20</x>
       <y>20</y>
       <width>751</width>
-      <height>401</height>
+      <height>361</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnExtract">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>390</y>
+      <width>93</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>解压</string>
     </property>
    </widget>
   </widget>
