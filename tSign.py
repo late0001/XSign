@@ -7,9 +7,13 @@ from selenium.webdriver.support.ui import WebDriverWait # available since 2.4.0
 from selenium.webdriver.support import expected_conditions as EC # available since 2.26.0
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import ElementNotVisibleException
+from selenium.common.exceptions import ElementClickInterceptedException 
 from selenium.common.exceptions import TimeoutException as SeleTimeoutException
+from selenium.common.exceptions import ElementNotInteractableException
+from selenium.webdriver.support import expected_conditions
 from configparser import ConfigParser
- 
+
 class TSign:
     def __init__(self):     
         cfg = ConfigParser()
@@ -23,6 +27,8 @@ class TSign:
         self.coeff11n = cfg.get('iflow', '11n')
         self.coeff11ac = cfg.get('iflow', '11ac')
         self.coeff11ax = cfg.get('iflow', '11ax')
+        self.mspt_usr = cfg.get('ms_sign', 'username')
+        self.mspt_pwd = cfg.get('ms_sign', 'password')
         #current_path = os.path.dirname(os.path.realpath(__file__))
     
     def initBrowser(self):
@@ -96,6 +102,91 @@ class TSign:
                 element = WebDriverWait(self.driver,10).until(EC.visibility_of_element_located((By.XPATH, "//button[@type='button'][contains(.,'Download')]")))
                 ActionChains(self.driver).move_to_element(element).click().perform()
         
-    
+    def MSSign(self, data):
+        self.initBrowser()
+        driver = self.driver
+        while (True):
+            try:
+                driver.get("https://partner.microsoft.com/zh-CN/dashboard/hardware/Search")
+                    #https://partner.microsoft.com/zh-CN/dashboard/hardware/Search
+                time.sleep(2);
+                login_username = driver.find_element_by_xpath("//input[contains(@type,'email')]")
+                login_username.send_keys(self.mspt_usr);
+                time.sleep(0.1);
+                next_btn = driver.find_element_by_xpath("//input[contains(@type,'submit')]")
+                next_btn.click();
+                time.sleep(2);
+                login_password = driver.find_element_by_xpath("//input[contains(@name,'passwd')]")
+                login_password.send_keys(self.mspt_pwd);
+                next_btn = driver.find_element_by_xpath("//input[contains(@type,'submit')]")
+                next_btn.click();
+                time.sleep(1);
+                next_btn = driver.find_element_by_xpath("//input[contains(@value,'是')]")
+                next_btn.click();
+                time.sleep(1);
+           
+                for needSignItem in data:
+                    retry = 0;
+                    driver.get("https://partner.microsoft.com/zh-CN/dashboard/hardware/driver/New")
+                    '''
+                    next_btn = driver.find_element_by_xpath("//div[@class='onedash-navigation-category'][contains(.,'驅動程式')]")
+                    next_btn = driver.find_element_by_xpath("//A[@href='/zh-tw/dashboard/hardware/driver'][text()='驅動程式']")
+                    next_btn.Click();
+                    '''
+                    time.sleep(6)
+                    while(True):
+                        try:
+                            #IWebElement newhard = driver.find_element_by_xpath("//A[@class='btn btn-primary hide-focus'][text()='Submit new hardware']")
+                            #newhard.click();
+                            inputHN = driver.find_element_by_xpath("//*[@id=\"inputDriverName\"]")
+                            inputHN.send_keys(needSignItem["proj_name"])
+                            inputfile = driver.find_element_by_xpath("//*[@id='file']")
+                            inputfile.send_keys(needSignItem["filename"])
+                            time.sleep(5)
+     
+                            WebDriverWait(driver,10).until(EC.visibility_of_element_located(('xpath',"//span[@uitestid='spanRequestedSignature_WINDOWS_v100_X64_RS1_FULL']")))
+                            if (needSignItem["isX64"]):
+                                checkBox_X64_RS1 = driver.find_element_by_xpath("//span[@uitestid='spanRequestedSignature_WINDOWS_v100_X64_RS1_FULL']")
+                                checkBox_X64_19H1 = driver.find_element_by_xpath("//span[@uitestid='spanRequestedSignature_WINDOWS_v100_X64_19H1_FULL']")
+                                checkBox_X64_RS1.click()
+                                checkBox_X64_19H1.click()
+                            else:
+                                checkBox_X86_RS1 = driver.find_element_by_xpath("//span[contains(@uitestid,'spanRequestedSignature_WINDOWS_v100_RS1_FULL')]")
+                                checkBox_X86_19H1 = driver.find_element_by_xpath("//span[contains(@uitestid,'spanRequestedSignature_WINDOWS_v100_19H1_FULL')]")
+                                checkBox_X86_RS1.click()
+                                checkBox_X86_19H1.click()
+                            
+                            time.sleep(10);
+                            while (True):
+                            
+                                try:
+
+                                    WebDriverWait(driver=driver,timeout=10,poll_frequency=0.5).until(\
+                                        expected_conditions.visibility_of_element_located(('xpath',"//button[@uitestid='buttonSubmit']"))\
+                                    )
+                                    break
+                                except SeleTimeoutException as ste:
+                                    time.sleep(2)
+                                                        
+
+                            submit_btn = driver.find_element_by_xpath("//button[@uitestid='buttonSubmit']")
+                            submit_btn.click()
+                            time.sleep(20)
+                            break
+                        
+                        except ElementNotInteractableException as enie:
+                                continue
+                        except (NoSuchElementException, ElementClickInterceptedException) as nseex:
+                            print(nseex.toString())
+                            driver.get("https://partner.microsoft.com/zh-CN/dashboard/hardware/driver/New")
+                            time.sleep(5)
+                            continue
+                break
+            except NoSuchElementException as nseex :
+
+                    print(nseex.toString())
+                    time.sleep(2)
+                    continue
+
         
     

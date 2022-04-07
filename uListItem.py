@@ -28,8 +28,10 @@ class MyListWidgetItem(QWidget, Ui_ListWidgetItem):
         ship_star = 3 #data['ship_star']
         
         icon, name = getFileInfo(filename)
-        
-
+        data["proj_name"] = name[:-4]
+        #if name.endswith("cab"):
+        #    data["proj_name"] =  name[:-4]
+        name = data["proj_name"]
         #maps = QPixmap(ship_photo).scaled(40, 25)
     
         pixmap = icon.pixmap(QSize(40, 40), QIcon.Normal, QIcon.On)

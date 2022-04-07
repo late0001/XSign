@@ -1,22 +1,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMainWindow
-from PyQt5.QtWidgets import QPushButton
-from PyQt5.QtWidgets import QListWidgetItem
-from PyQt5.QtCore import QSize
-from PyQt5.QtCore import QFileInfo
-from PyQt5.QtWidgets import QFileIconProvider
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtWidgets import QHBoxLayout
-from PyQt5.QtWidgets import QVBoxLayout
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QLabel 
-from PyQt5 import QtCore
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QListWidgetItem, QLabel, QFileIconProvider, QWidget, QHBoxLayout, QVBoxLayout
+from PyQt5.QtCore import QSize, QFileInfo, Qt
+from PyQt5.QtGui import QIcon, QColor 
 from XSignWinui import Ui_MainWindow
 import sys
 from ud_zip import ZFile
 from uListItem import MyListWidgetItem
 from tSign import TSign
+from selenium.common.exceptions import NoSuchElementException   
 
 class mywindow(QMainWindow, Ui_MainWindow):
     def  __init__ (self):
@@ -29,6 +20,7 @@ class mywindow(QMainWindow, Ui_MainWindow):
         self.pushButton1.RecvFileSignal.connect(self.dealRecvFile)
         self.btnExtract.clicked.connect(self.btnExtractClicked)
         self.btnRtkSign.clicked.connect(self.btnRtkSignClicked)
+        self.btnMSSign.clicked.connect(self.btnMSSignClicked)
         self.tSign = TSign()
     
     def btnRtkSignClicked(self):
@@ -38,6 +30,9 @@ class mywindow(QMainWindow, Ui_MainWindow):
         for it in self.ic:
             extractZip( it["filename"], "./temp")
     
+    def btnMSSignClicked(self):
+        self.tSign.MSSign(self.ic)
+
     def dealRecvFile(self, fileList):
         print ("*"*80)
         print (fileList)
@@ -61,7 +56,10 @@ class mywindow(QMainWindow, Ui_MainWindow):
             widget.initData(it)
             self.listWidget.addItem(item) # 添加item
             self.listWidget.setItemWidget(item, widget) # 为item设置widget
-            
+        
+        for it in ic:
+            print("ic=>", ic)
+
 class Button(QPushButton):
     RecvFileSignal = QtCore.pyqtSignal(list)
     def __init__(self, parent):
