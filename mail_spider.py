@@ -1,5 +1,4 @@
 # * coding=utf-8 *
-#https://www.ds54.xyz/torrent/ce2551480accf08f3937865dd00ec965ad1fcb83.torrent
 import urllib
 #import urllib2
 #import urllib.request
@@ -629,6 +628,8 @@ class Spider:
         #print(html.decode("utf-8"))
        
         respHtml = html.decode("utf-8");
+        with open("mailhello.txt", "w", encoding="utf-8") as fo:
+            fo.write(respHtml)
         #<input type="checkbox" name="chkmsg" value="RgAAAACZpfPyFZDkTIBBuJbamineBwB3JuyQcogkSZTumckl5UoQAAAApGXlAABmstg4X0+IQL1SPLvPP4CPAAFbGrirAAAJ" title="&#36873;&#25321;&#39033;&#30446;" onclick="onClkChkBx(this);">&nbsp;</td><td nowrap class="frst">motp@realtek.com&nbsp;</td>
         foundTokenVal = re.search("<input type=\"checkbox\" name=\"chkmsg\" value=\"(?P<id>[^>]+)\" title=\"[^>]+\" onclick=\"[^>]+\">&nbsp;</td><td nowrap( class=\"frst\")?>motp@realtek.com&nbsp;<[^>]+>", respHtml) #(.*)motp@realtek.com
         bFindMOTP = False
