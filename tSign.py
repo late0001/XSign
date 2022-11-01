@@ -109,7 +109,7 @@ class TSign:
             try:
                 driver.get("https://partner.microsoft.com/zh-CN/dashboard/hardware/Search")
                     #https://partner.microsoft.com/zh-CN/dashboard/hardware/Search
-                time.sleep(2);
+                time.sleep(6);
                 login_username = driver.find_element_by_xpath("//input[contains(@type,'email')]")
                 login_username.send_keys(self.mspt_usr);
                 time.sleep(0.1);

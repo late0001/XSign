@@ -8,21 +8,46 @@ from ud_zip import ZFile
 from uListItem import MyListWidgetItem
 from tSign import TSign
 from selenium.common.exceptions import NoSuchElementException   
+import operator as op
+import os
 
 class mywindow(QMainWindow, Ui_MainWindow):
     def  __init__ (self):
         super(mywindow, self).__init__()
         self.setupUi(self)
-        self.pushButton1 = Button(self.centralwidget)
+        self.pushButton1 = Button(self.centralwidget, self)
         self.pushButton1.setGeometry(QtCore.QRect(20, 440, 751, 101))
         self.pushButton1.setObjectName("pushButton1")
-        self.pushButton1.setText("Oj8K")
+        self.pushButton1.setText("Drag file to here")
         self.pushButton1.RecvFileSignal.connect(self.dealRecvFile)
         self.btnExtract.clicked.connect(self.btnExtractClicked)
         self.btnRtkSign.clicked.connect(self.btnRtkSignClicked)
         self.btnMSSign.clicked.connect(self.btnMSSignClicked)
+        self.pb_stripdir.clicked.connect(self.btnStripDirClicked)
+        self.pb_peel.clicked.connect(self.btnPeelClicked)
         self.tSign = TSign()
     
+    def btnStripDirClicked(self):
+        str1 = self.te_pdb.toPlainText()
+        idx = str1.rfind("/")
+        if(idx >-1 ):
+            str1 = str1[0: idx]
+            print(str1)
+            self.te_pdb.setText(str1)
+        
+    def btnPeelClicked(self):
+        etl = self.te_etl.toPlainText()
+        pdb = self.te_pdb.toPlainText()
+        ofile = etl[0:-4] + ".txt"
+        cmd = "\"C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.19041.0\\x64\\tracefmt.exe\" "
+        if(os.path.isdir(pdb)):
+            cmd = cmd + etl + " -r " + pdb + " -o " + ofile
+        else:
+            cmd = cmd + etl + " -pdb " + pdb + " -o " + ofile
+        
+        print(cmd)
+        os.system(cmd)
+            
     def btnRtkSignClicked(self):
         self.tSign.signFiles(self.ic)
         
@@ -62,9 +87,11 @@ class mywindow(QMainWindow, Ui_MainWindow):
 
 class Button(QPushButton):
     RecvFileSignal = QtCore.pyqtSignal(list)
-    def __init__(self, parent):
+    
+    def __init__(self, parent, mf):
         super(Button, self).__init__(parent)
         self.setAcceptDrops(True)
+        self.mf = mf
         #self.setDragDropMode(QAbstractItemView.InternalMove)
 
     def dragEnterEvent(self, event):
@@ -77,16 +104,33 @@ class Button(QPushButton):
         super(Button, self).dragMoveEvent(event)
     
     def dropEvent(self, event):
-        ilist = []
-        if event.mimeData().hasUrls():
-            for url in event.mimeData().urls():
-                path = str(url.toLocalFile())
+        idx = self.mf.tabWidget.currentIndex()
+        print("idx = ", idx)
+        if(idx == 0):
+            ilist = []
+            if event.mimeData().hasUrls():
+                for url in event.mimeData().urls():
+                    path = str(url.toLocalFile())
+                    print (path)
+                    ilist.append(path)
+                self.RecvFileSignal.emit(ilist)
+                event.acceptProposedAction()
+            else:
+                super(Button,self).dropEvent(event)
+        elif (idx == 1):
+            if event.mimeData().hasUrls():
+                for url in event.mimeData().urls():
+                    path = str(url.toLocalFile())
                 print (path)
-                ilist.append(path)
-            self.RecvFileSignal.emit(ilist)
-            event.acceptProposedAction()
-        else:
-            super(Button,self).dropEvent(event)
+                if(path[-4:] == ".etl"):
+                    self.mf.te_etl.setText(path)
+                else:
+                    print("not bat")
+                    self.mf.te_pdb.setText(path)
+                event.acceptProposedAction()
+            else:
+                super(Button,self).dropEvent(event)
+        
 
 #解压缩Zip到指定文件夹
 def extractZip(zfile, path):
