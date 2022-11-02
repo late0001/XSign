@@ -117,16 +117,6 @@
        <string>.pdb Path</string>
       </property>
      </widget>
-     <widget class="QTextEdit" name="textEdit_3">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>120</y>
-        <width>601</width>
-        <height>191</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QPushButton" name="pb_peel">
       <property name="geometry">
        <rect>
@@ -151,6 +141,16 @@
       </property>
       <property name="text">
        <string>ExtratDir</string>
+      </property>
+     </widget>
+     <widget class="QListView" name="listView">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>120</y>
+        <width>601</width>
+        <height>192</height>
+       </rect>
       </property>
      </widget>
     </widget>

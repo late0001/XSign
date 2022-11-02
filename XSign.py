@@ -11,6 +11,7 @@ from selenium.common.exceptions import NoSuchElementException
 import operator as op
 import os
 from ExThd import WorkThread 
+from XConfig import XConfig
 
 class mywindow(QMainWindow, Ui_MainWindow):
     ConvertSignal = QtCore.pyqtSignal(str)
@@ -28,7 +29,13 @@ class mywindow(QMainWindow, Ui_MainWindow):
         self.btnMSSign.clicked.connect(self.btnMSSignClicked)
         self.pb_stripdir.clicked.connect(self.btnStripDirClicked)
         self.pb_peel.clicked.connect(self.btnPeelClicked)
-        self.tSign = TSign()
+        cfg = XConfig()
+        cfg.getAccConfig()
+        cfg.getBuildEnvConfig()
+        self.tracefmt = cfg.tracefmt
+        self.cfg = cfg
+        self.tSign = TSign(cfg)
+        
     
     def btnStripDirClicked(self):
         str1 = self.te_pdb.toPlainText()
@@ -46,11 +53,11 @@ class mywindow(QMainWindow, Ui_MainWindow):
         etl = self.te_etl.toPlainText()
         pdb = self.te_pdb.toPlainText()
         ofile = etl[0:-4] + ".txt"
-        cmd = "\"C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.19041.0\\x64\\tracefmt.exe\" "
+        cmd = self.tracefmt 
         if(os.path.isdir(pdb)):
-            cmd = cmd + etl + " -r " + pdb + " -o " + ofile
+            cmd = cmd + " " + etl + " -r " + pdb + " -o " + ofile
         else:
-            cmd = cmd + etl + " -pdb " + pdb + " -o " + ofile
+            cmd = cmd + " " + etl + " -pdb " + pdb + " -o " + ofile
         self.decodethread = WorkThread(cmd)    
         self.decodethread.signal_over.connect(self.thread_decode_over)  
         self.decodethread.start()  # 启动线程

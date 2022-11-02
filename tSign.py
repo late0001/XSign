@@ -15,20 +15,18 @@ from selenium.webdriver.support import expected_conditions
 from configparser import ConfigParser
 
 class TSign:
-    def __init__(self):     
-        cfg = ConfigParser()
-        cfg.read('config.ini')
-        self.certsign_username = cfg.get('certsign', 'username')
-        self.certsign_password = cfg.get('certsign', 'password')
-        self.iflow_username = cfg.get('iflow', 'username')
-        self.iflow_password = cfg.get('iflow', 'password')
-        self.email_username = cfg.get('email', 'username')
-        self.email_password = cfg.get('email', 'password')
-        self.coeff11n = cfg.get('iflow', '11n')
-        self.coeff11ac = cfg.get('iflow', '11ac')
-        self.coeff11ax = cfg.get('iflow', '11ax')
-        self.mspt_usr = cfg.get('ms_sign', 'username')
-        self.mspt_pwd = cfg.get('ms_sign', 'password')
+    def __init__(self, cfg):     
+        self.certsign_username = cfg.certsign_username 
+        self.certsign_password = cfg.certsign_password
+        self.iflow_username = cfg.iflow_username
+        self.iflow_password = cfg.iflow_password
+        self.email_username = cfg.email_username
+        self.email_password = cfg.email_password
+        self.coeff11n = cfg.coeff11n
+        self.coeff11ac = cfg.coeff11ac
+        self.coeff11ax = cfg.coeff11ax
+        self.mspt_usr = cfg.mspt_usr 
+        self.mspt_pwd = cfg.mspt_pwd
         #current_path = os.path.dirname(os.path.realpath(__file__))
     
     def initBrowser(self):
