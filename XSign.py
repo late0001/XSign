@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QListWidgetItem, QLabel, QFileIconProvider, QWidget, QHBoxLayout, QVBoxLayout
-from PyQt5.QtCore import QSize, QFileInfo, Qt
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QListWidgetItem, QLabel, QFileIconProvider, QWidget, QHBoxLayout, QVBoxLayout, QMessageBox
+from PyQt5.QtCore import QSize, QFileInfo, Qt, QStringListModel
 from PyQt5.QtGui import QIcon, QColor 
 from XSignWinui import Ui_MainWindow
 import sys
@@ -35,7 +35,42 @@ class mywindow(QMainWindow, Ui_MainWindow):
         self.tracefmt = cfg.tracefmt
         self.cfg = cfg
         self.tSign = TSign(cfg)
+        self.qList =[]
+        self.initLVFromFile()
+        #self.listView.clicked.connect(self.clickedList) #listview 的点击事件
+        self.listView.clicked.connect(self.doubleClickedList) #listview 的双击事件
+    
+    #def clickedList(self, qModelIndex):
+    #    QMessageBox.information(self, "QListView", "你选择了: "+ self.qList[qModelIndex.row()])
+    
+    def doubleClickedList(self, qModelIndex):
+        self.te_pdb.setText(self.qList[qModelIndex.row()])       
         
+    def initLVFromFile(self):
+        filepath = "pdbcache.dat"
+        if not os.access(filepath, os.F_OK):
+            print (filepath +" not exist.")
+            return 
+        model = QStringListModel()
+        with open(filepath,'r',encoding='utf-8') as f:
+            self.qList =[]
+            for line in f:
+                self.qList.append(line)     
+        #model.appendRow(line)#添加进listView中
+        model.setStringList(self.qList) #将数据设置到model
+        self.listView.setModel(model)        
+                   
+        
+    def writeToFile(self, content):
+        filepath = "pdbcache.dat"
+        if os.access(filepath, os.F_OK):
+            print (filepath +" file path is exist.")
+            with open(filepath,'r',encoding='utf-8') as f:
+                for line in f:
+                    if(line == content):
+                        return
+        with open("pdbcache.dat", "a", encoding='utf-8') as f:
+            f.write(content)
     
     def btnStripDirClicked(self):
         str1 = self.te_pdb.toPlainText()
@@ -143,7 +178,7 @@ class Button(QPushButton):
                 if(path[-4:] == ".etl"):
                     self.mf.te_etl.setText(path)
                 else:
-                    print("not bat")
+                    self.mf.writeToFile(path)
                     self.mf.te_pdb.setText(path)
                 event.acceptProposedAction()
             else:
