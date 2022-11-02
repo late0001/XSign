@@ -87,6 +87,8 @@ class Ui_MainWindow(object):
         self.btnMSSign.setText(_translate("MainWindow", "MS Sign"))
         self.btnExtract.setText(_translate("MainWindow", "解压"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Sign"))
+        self.te_etl.setPlaceholderText(_translate("MainWindow", ".etl Path"))
+        self.te_pdb.setPlaceholderText(_translate("MainWindow", ".pdb Path"))
         self.pb_peel.setText(_translate("MainWindow", "Convert"))
         self.pb_stripdir.setText(_translate("MainWindow", "ExtratDir"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Log"))

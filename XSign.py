@@ -10,8 +10,11 @@ from tSign import TSign
 from selenium.common.exceptions import NoSuchElementException   
 import operator as op
 import os
+from ExThd import WorkThread 
 
 class mywindow(QMainWindow, Ui_MainWindow):
+    ConvertSignal = QtCore.pyqtSignal(str)
+    
     def  __init__ (self):
         super(mywindow, self).__init__()
         self.setupUi(self)
@@ -34,8 +37,12 @@ class mywindow(QMainWindow, Ui_MainWindow):
             str1 = str1[0: idx]
             print(str1)
             self.te_pdb.setText(str1)
+    
+    def thread_decode_over(self):
+        self.pb_peel.setEnabled(True)
         
     def btnPeelClicked(self):
+        self.pb_peel.setEnabled(False)
         etl = self.te_etl.toPlainText()
         pdb = self.te_pdb.toPlainText()
         ofile = etl[0:-4] + ".txt"
@@ -44,9 +51,13 @@ class mywindow(QMainWindow, Ui_MainWindow):
             cmd = cmd + etl + " -r " + pdb + " -o " + ofile
         else:
             cmd = cmd + etl + " -pdb " + pdb + " -o " + ofile
+        self.decodethread = WorkThread(cmd)    
+        self.decodethread.signal_over.connect(self.thread_decode_over)  
+        self.decodethread.start()  # 启动线程
+
         
-        print(cmd)
-        os.system(cmd)
+
+        
             
     def btnRtkSignClicked(self):
         self.tSign.signFiles(self.ic)
@@ -87,7 +98,7 @@ class mywindow(QMainWindow, Ui_MainWindow):
 
 class Button(QPushButton):
     RecvFileSignal = QtCore.pyqtSignal(list)
-    
+
     def __init__(self, parent, mf):
         super(Button, self).__init__(parent)
         self.setAcceptDrops(True)
