@@ -55,7 +55,7 @@ class mywindow(QMainWindow, Ui_MainWindow):
         with open(filepath,'r',encoding='utf-8') as f:
             self.qList =[]
             for line in f:
-                self.qList.append(line)     
+                self.qList.append(line[:-1])# delete \n     
         #model.appendRow(line)#添加进listView中
         model.setStringList(self.qList) #将数据设置到model
         self.listView.setModel(model)        
@@ -70,6 +70,7 @@ class mywindow(QMainWindow, Ui_MainWindow):
                     if(line == content):
                         return
         with open("pdbcache.dat", "a", encoding='utf-8') as f:
+            content +="\n"
             f.write(content)
     
     def btnStripDirClicked(self):
