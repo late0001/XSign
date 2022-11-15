@@ -89,11 +89,20 @@ if __name__ == '__main__':
     for example Tocab.py G:\\xv\\MP_branch\\8723F\\8723F 
     '''
     
-    ic = "8723F"
-    adir = sys.argv[1]
-    a = adir.rfind("\\")
-    ic = adir[a+1:]
-    Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X64", ic  + "S_Win7x64")
-    Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X86", ic  + "S_Win7x86")
-    Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X64", ic  + "U_Win7x64")
-    Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X86", ic  + "U_Win7x86")
+    ic = "RTL8822C"
+    #adir = sys.argv[1]
+    #a = adir.rfind("\\")
+    #ic = adir[a+1:]
+    #adir="G:\\xv\\MP_branch\\8723F\\8723F"
+    adir = "G:\\xv\\MP_branch\\8822c\\8822c"
+    s = "EUS"
+    if (str.__contains__(s, 'E')):
+        Tocab(adir + "\\RTLWlanE_WindowsDriver_\\Win7\\X64", ic  + "E_Win7x64")
+        Tocab(adir + "\\RTLWlanE_WindowsDriver_\\Win7\\X86", ic  + "E_Win7x86")
+    if (str.__contains__(s, 'S')):
+        Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X64", ic  + "S_Win7x64")
+        Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X86", ic  + "S_Win7x86")
+    if (str.__contains__(s, 'U')):
+        Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X64", ic  + "U_Win7x64")
+        Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X86", ic  + "U_Win7x86")
+        
