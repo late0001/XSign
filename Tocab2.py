@@ -86,9 +86,26 @@ def Tocab(adir, filename):
     walkFile(adir)
     os.system('Makecab /f test.ddf')
     print("output: " + os.path.dirname(os.path.realpath(__file__))+"\\disk1\\" +filename +".cab\n")
-'''
-if __name__ == '__main__':
-'''
+
+def _8822c():
+    '''
+    usage : Tocab.py   [dir]   
+    for example Tocab.py G:\\xv\\MP_branch\\8723F\\8723F 
+    '''
+    ic = "RTL8822C"
+    adir="G:\\xv\\MP_branch\\8822c\\8822c" 
+    s = "U"
+    if (str.__contains__(s, 'E')):
+        Tocab(adir + "\\RTLWlanE_WindowsDriver_\\Win7\\X64", ic  + "E_Win7x64")
+        Tocab(adir + "\\RTLWlanE_WindowsDriver_\\Win7\\X86", ic  + "E_Win7x86")
+    if (str.__contains__(s, 'S')):
+        Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X64", ic  + "S_Win7x64")
+        Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X86", ic  + "S_Win7x86")
+    if (str.__contains__(s, 'U')):
+        Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X64", ic  + "U_Win7x64")
+        Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X86", ic  + "U_Win7x86")
+
+
 def _8733b():
     '''
     usage : Tocab.py   [dir]   
@@ -116,42 +133,42 @@ def _8821c():
     adir="G:\\xv\\MP_branch\\8821C\\8821c"
     s = "E"
     if (str.__contains__(s, 'E')):
-        Tocab(adir + "\\RTLWlanE_WindowsDriver_\\Win7\\X64", ic + "_Win7x64");
-        Tocab(adir + "\\RTLWlanE_WindowsDriver_\\Win7\\X86", ic + "_Win7x86");
+        Tocab(adir + "\\RTLWlanE_WindowsDriver_\\Win7\\X64", ic + "E_Win7x64");
+        Tocab(adir + "\\RTLWlanE_WindowsDriver_\\Win7\\X86", ic + "E_Win7x86");
     if (str.__contains__(s, 'U')):
-        Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X64", ic + "_Win7x64");
-        Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X86", ic + "_Win7x86");
+        Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X64", ic + "U_Win7x64");
+        Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X86", ic + "U_Win7x86");
     if (str.__contains__(s, 'S')):
-        Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X64", ic + "_Win7x64");
-        Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X86", ic + "_Win7x86");
+        Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X64", ic + "S_Win7x64");
+        Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X86", ic + "S_Win7x86");
 
 def _8192f():
     ic = "RTL8192F"
     adir="G:\\xv\\MP_branch\\8192F\\8192f" 
     s = "U"
     if (str.__contains__(s, 'E')):
-        Tocab(adir + "\\RTLWlanE_WindowsDriver_\\Win7\\X64", ic + "_Win7x64");
-        Tocab(adir + "\\RTLWlanE_WindowsDriver_\\Win7\\X86", ic + "_Win7x86");
+        Tocab(adir + "\\RTLWlanE_WindowsDriver_\\Win7\\X64", ic + "E_Win7x64");
+        Tocab(adir + "\\RTLWlanE_WindowsDriver_\\Win7\\X86", ic + "E_Win7x86");
     if (str.__contains__(s, 'U')):
-        Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X64", ic + "_Win7x64");
-        Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X86", ic + "_Win7x86");
+        Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X64", ic + "U_Win7x64");
+        Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X86", ic + "U_Win7x86");
     if (str.__contains__(s, 'S')):
-        Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X64", ic + "_Win7x64");
-        Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X86", ic + "_Win7x86");
+        Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X64", ic + "S_Win7x64");
+        Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X86", ic + "S_Win7x86");
 
 def _8852b():
     ic = "RTL8852B"
     adir="G:\\xv\\MP_branch\\8852B\\rtwlan" 
     s = "U"
     if (str.__contains__(s, 'E')):
-        Tocab(adir + "\\RTLWlanE_WindowsDriver_\\Win7\\X64", ic + "_Win7x64");
-        Tocab(adir + "\\RTLWlanE_WindowsDriver_\\Win7\\X86", ic + "_Win7x86");
+        Tocab(adir + "\\RTLWlanE_WindowsDriver_\\Win7\\X64", ic + "E_Win7x64");
+        Tocab(adir + "\\RTLWlanE_WindowsDriver_\\Win7\\X86", ic + "E_Win7x86");
     if (str.__contains__(s, 'U')):
-        Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X64", ic + "_Win7x64");
-        Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X86", ic + "_Win7x86");
+        Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X64", ic + "U_Win7x64");
+        Tocab(adir + "\\RTLWlanU_WindowsDriver_\\Win7\\X86", ic + "U_Win7x86");
     if (str.__contains__(s, 'S')):
-        Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X64", ic + "_Win7x64");
-        Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X86", ic + "_Win7x86");
+        Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X64", ic + "S_Win7x64");
+        Tocab(adir + "\\RTLWlanS_WindowsDriver_\\Win7\\X86", ic + "S_Win7x86");
     '''
     ic = "RTL8822E"
     Tocab("G:\\jd_project\\CertSign\\XSign\\temp\\RTLWlanS_WindowsDriver_TestDriver0221\\X64", ic  + "S_Win7x64")
@@ -193,6 +210,7 @@ if __name__ == '__main__':
     #ic = "RTL8821CE"
     #Tocab("C:\\Users\\Administrator\\Downloads\\Win7_MP_Kit_RTL11ac_8821CE_PCIE_v12.00_SRRC_20230907(BETA)\\MpDriver\\X64",  ic + "_Win7x64");
     #Tocab("C:\\Users\\Administrator\\Downloads\\Win7_MP_Kit_RTL11ac_8821CE_PCIE_v12.00_SRRC_20230907(BETA)\\MpDriver\\X86",  ic + "_Win7x86");
-    _8192f()
+    _8822c()
+    #_8192f()
     #_8733b()
     #_8821c()
