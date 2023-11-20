@@ -2,6 +2,7 @@ import os
 import sys
 import datetime
 import subprocess
+import zipfile
 
 global gitpath
 gitpath="C:\\Program Files\\Git\\bin\\"
@@ -9,6 +10,7 @@ gitpath="C:\\Program Files\\Git\\bin\\"
 def fprintf(stream, format_spec, *args): 
     #print("="*80)
     stream.write(format_spec % args) 
+    
 def checkInf(path):
     idx = path.rfind("inf")
     if  idx == -1:
@@ -23,7 +25,84 @@ def checkInf(path):
                 os.rmdir(os.path.join(root, name))
     chkinf = "D:\\WinDDK\\7600.16385.0\\tools\\Chkinf\\chkinf.bat"
     os.system('%s \"%s\"' % (chkinf, path));
+
+def unzipRTK(path):   
+    if os.path.exists(path):
+        print("Found path: ", path)
+        #os.rmdir(".\htm")
+        for root, dirs, files in os.walk(path, topdown=False):
+            for name in files:
+                destination_folder = root
+                zz = os.path.join(root, name)
+                print("zz :%s"% zz)
+                #os.remove(os.path.join(root, name))
+                idx = zz.rfind("zip")
+                if  idx == -1:
+                    continue
+                nufile = name[0:-4] + ".cab"
+                print("unzip %s => %s "% (nufile, destination_folder))
+                # 打开zip文件
+                zip_ref = zipfile.ZipFile(zz, 'r')       
+                # 解压zip文件中的所有文件
+                #zip_ref.extractall(destination_folder)
+            
+                # 解压zip文件中的特定文件
+                zip_ref.extract(nufile, destination_folder)
+                # 关闭zip文件
+                zip_ref.close()
     
+def rmzipRTK(path):   
+    if os.path.exists(path):
+        print("Found path: ", path)
+        for root, dirs, files in os.walk(path, topdown=False):
+            for name in files:
+                destination_folder = root
+                zz = os.path.join(root, name)
+                #print("zz :%s"% zz)
+                #os.remove(os.path.join(root, name))
+                idx = zz.rfind("zip")
+                if  idx == -1:
+                    continue
+                needrm = os.path.join(root, name)
+                print("rm %s"% needrm)
+                os.remove(needrm)
+
+def uncabRTK(path):
+    if os.path.exists(path):
+        print("Found path: ", path)
+        for root, dirs, files in os.walk(path, topdown=False):
+            for name in files:
+                destination_folder = root
+                idx = zz.rfind("cab")
+                if  idx == -1:
+                    continue
+                URL1 = os.path.join(root, name)
+                cab = cabfile.CabFile(URL1)
+                URL2 = os.path.splitext(URL1) #分离文件名和扩展名
+                os.mkdir(URL2[0])
+                cab.extract(URL2[0])
+                cab.close()
+
+def unzipMsRTK(path):   
+    if os.path.exists(path):
+        print("Found path: ", path)
+        for root, dirs, files in os.walk(path, topdown=False):
+            for name in files:
+                destination_folder = root
+                zz = os.path.join(root, name)
+                print("zz :%s"% zz)
+                #os.remove(os.path.join(root, name))
+                idx = zz.rfind("zip")
+                if  idx == -1:
+                    continue
+                print("unzip => %s "% (destination_folder))
+                # 打开zip文件
+                zip_ref = zipfile.ZipFile(zz, 'r')
+                # 解压zip文件中的所有文件
+                zip_ref.extractall(destination_folder)
+                # 关闭zip文件
+                zip_ref.close()
+                
 def addheader(filename):
     str = ''';*** Echo.ddf example
 ;
@@ -243,5 +322,10 @@ if __name__ == '__main__':
     #_8192f()
     #_8733b()
     #_8821c()
-    _8852b()
+    #_8852b()
     #_8852c()
+    udir =  "G:\\jd_project\\CertSign\\XSign\\disk1\\RTKSign"
+    #unzipRTK(udir)
+    #rmzipRTK(udir)
+    udir =  "G:\\jd_project\\CertSign\\XSign\\disk1\\MSSign"
+    unzipMsRTK(udir)
