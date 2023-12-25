@@ -325,7 +325,15 @@ if __name__ == '__main__':
     #_8852b()
     #_8852c()
     udir =  "G:\\jd_project\\CertSign\\XSign\\disk1\\RTKSign"
-    #unzipRTK(udir)
-    #rmzipRTK(udir)
-    udir =  "G:\\jd_project\\CertSign\\XSign\\disk1\\MSSign"
-    unzipMsRTK(udir)
+    if (len(sys.argv) == 2):
+        if(sys.argv[1] == "0"):
+            unzipRTK(udir)    
+        elif(sys.argv[1] == "1"):
+            rmzipRTK(udir)
+        elif(sys.argv[1] == "2"):
+            udir =  "G:\\jd_project\\CertSign\\XSign\\disk1\\MSSign"
+            unzipMsRTK(udir)
+    else:
+        print("You must input least one param!!!")
+    #
+    
